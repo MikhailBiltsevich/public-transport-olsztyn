@@ -1,11 +1,13 @@
 import {
   AppBar,
+  Backdrop,
   Box,
-  Container,
+  CircularProgress,
   CssBaseline,
   Toolbar,
   Typography,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -14,6 +16,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "@remix-run/react";
 
 export async function loader() {
@@ -21,6 +24,9 @@ export async function loader() {
 }
 
 export default function App() {
+  const { state: navState } = useNavigation();
+  const isNavigationLoading = navState === "loading";
+
   return (
     <html lang="en">
       <head>
@@ -30,8 +36,8 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Box>
-          <AppBar position="sticky">
+        <Box minHeight="100vh" sx={{ backgroundColor: grey[100] }}>
+          <AppBar position="static">
             <Toolbar>
               <Typography
                 variant="h6"
@@ -42,14 +48,18 @@ export default function App() {
               </Typography>
             </Toolbar>
           </AppBar>
-          <Container maxWidth="lg">
-            <Outlet />
-          </Container>
+          <Outlet />
         </Box>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
         <CssBaseline />
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isNavigationLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </body>
     </html>
   );
