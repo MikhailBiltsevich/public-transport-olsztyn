@@ -20,5 +20,8 @@ module.exports = {
     "p-cancelable",
     "@szmarczak/http-timer",
     "@sindresorhus/is",
+    "normalize-url",
+    "responselike",
+    "mimic-response",
   ],
 };
