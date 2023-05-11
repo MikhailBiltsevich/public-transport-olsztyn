@@ -1,10 +1,12 @@
+import type { Route } from "~/entities/route/models/Route";
+
 export type Stop = {
   id: string;
   name: string;
   uwg: string;
   x: string;
   y: string;
-  routes: Record<"name" | "type", string>[];
+  routes: Route[];
   number?: string;
   street?: string;
 };
