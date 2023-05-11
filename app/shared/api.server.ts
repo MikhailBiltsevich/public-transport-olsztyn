@@ -95,7 +95,7 @@ export async function getStopsByName(stopName: string) {
     "s"
   );
 
-  return stopsByName;
+  return Array.isArray(stopsByName) ? stopsByName : [stopsByName];
 }
 
 export async function getStopsByNumber(stopNumber: string) {
@@ -145,8 +145,7 @@ export async function getStopsByNumber(stopNumber: string) {
     "s"
   );
 
-  console.log(JSON.stringify(stopsByNumber));
-  return stopsByNumber;
+  return Array.isArray(stopsByNumber) ? stopsByNumber : [stopsByNumber];
 }
 
 export async function getStopsOnStreet(streetId: string) {
@@ -196,7 +195,7 @@ export async function getStopsOnStreet(streetId: string) {
     "stop"
   );
 
-  return stopsOnStreet;
+  return Array.isArray(stopsOnStreet) ? stopsOnStreet : [stopsOnStreet];
 }
 
 export async function getRealDepartures(stopId: number) {
