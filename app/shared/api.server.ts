@@ -198,7 +198,7 @@ export async function getStopsOnStreet(streetId: string) {
   return Array.isArray(stopsOnStreet) ? stopsOnStreet : [stopsOnStreet];
 }
 
-export async function getRealDepartures(stopId: number) {
+export async function getRealDepartures(stopId: string) {
   await getStreets();
   const { body } = await got.post(
     "http://sip.zdzit.olsztyn.eu/PublicService.asmx",
