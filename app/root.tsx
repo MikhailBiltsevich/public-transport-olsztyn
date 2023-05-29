@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { json } from "@remix-run/node";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -18,10 +18,6 @@ import {
   ScrollRestoration,
   useNavigation,
 } from "@remix-run/react";
-
-export async function loader() {
-  return json({});
-}
 
 export default function App() {
   const { state: navState } = useNavigation();
@@ -43,6 +39,10 @@ export default function App() {
                 variant="h6"
                 fontWeight="bold"
                 textTransform="uppercase"
+                color="white"
+                sx={{ textDecoration: "none" }}
+                component={Link}
+                to="/"
               >
                 Public Transport in Olsztyn
               </Typography>
