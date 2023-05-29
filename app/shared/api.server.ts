@@ -1,4 +1,5 @@
 import got from "got";
+import type { PlanedDepartures } from "./types";
 import { parseStringPromise } from "xml2js";
 import {
   firstCharLowerCase,
@@ -267,4 +268,40 @@ export async function getRealDepartures(stopId: string) {
   delete realDepartures.xmlns;
 
   return realDepartures;
+}
+
+export async function getPlanedDeparturesFullInfo(stopId: string) {
+  await getStreets();
+
+  const { body } = await got.post(
+    "http://sip.zdzit.olsztyn.eu/PublicService.asmx",
+    {
+      body: `<?xml version='1.0' encoding='utf-8'?>
+      <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
+        <soap:Body>
+          <GetPlanedDeparutresFullInfo xmlns='http://PublicService/'>
+            <id>${stopId}</id>
+          </GetPlanedDeparutresFullInfo>
+        </soap:Body>
+      </soap:Envelope>`,
+      headers: { "Content-Type": "text/xml;charset=UTF-8" },
+      cookieJar,
+    }
+  );
+
+  const parsed = await parseStringPromise(body, {
+    explicitArray: false,
+    mergeAttrs: true,
+    tagNameProcessors: [stripPrefix, normalize],
+    attrValueProcessors: [trimValue],
+  });
+
+  const planedDepartures = getResponseContent(
+    parsed,
+    "getplaneddeparutresfullinforesponse",
+    "getplaneddeparutresfullinforesult",
+    "schedules"
+  );
+
+  return planedDepartures as PlanedDepartures;
 }
