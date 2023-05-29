@@ -6,6 +6,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { Link } from "@remix-run/react";
 import { RouteButton } from "~/entities/route/ui/RouteButton";
 import type { Stop } from "../models/Stop";
 
@@ -34,7 +35,12 @@ export function StopCard({ stop }: Record<"stop", Stop>) {
         </Stack>
       </CardContent>
       <CardActions>
-        <Button fullWidth size="small">
+        <Button
+          component={Link}
+          to={`/stop/${stop.id}/real`}
+          fullWidth
+          size="small"
+        >
           Open
         </Button>
       </CardActions>
