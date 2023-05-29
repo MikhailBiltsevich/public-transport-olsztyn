@@ -4,6 +4,10 @@ export const getResponseContent = (
 ) => {
   let responseContent = parsedResponse.envelope.body;
   keys.forEach((key) => {
+    if (!responseContent) {
+      responseContent = undefined;
+      return;
+    }
     responseContent = responseContent[key];
   });
 
